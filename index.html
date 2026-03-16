@@ -125,17 +125,22 @@
             <div class="section-header">
                 <span class="section-tag">Ons aanbod</span>
                 <h2 class="section-title">Actuele <span class="highlight">voorraad</span></h2>
-                <p class="section-subtitle">Nieuwe en gebruikte fietsen direct uit ons systeem. Filter op nieuw, gebruikt of merk.</p>
+                <p class="section-subtitle">Nieuwe en gebruikte fietsen uit ons systeem. Klik op een fiets voor meer details.</p>
             </div>
 
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">Alle fietsen</button>
-                <button class="filter-btn" data-filter="new">Nieuw</button>
-                <button class="filter-btn" data-filter="used">Gebruikt</button>
+            <div class="voorraad-filter">
+                <button class="filter-btn active" onclick="loadVoorraad('1', this)">Gebruikte fietsen</button>
+                <button class="filter-btn" onclick="loadVoorraad('2', this)">Nieuwe fietsen</button>
             </div>
 
-            <div id="fietsen-grid" class="fietsen-grid">
-                <div class="loading-message">Fietsen worden geladen...</div>
+            <div class="voorraad-container">
+                <iframe id="fietsenwijk-frame" 
+                        src="https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/?cat=1&css=https://busvolbikes-website-production.up.railway.app/fietsenwijk.css" 
+                        width="100%" 
+                        height="800" 
+                        frameborder="0"
+                        title="Actuele fietsenvoorraad">
+                </iframe>
             </div>
 
             <div class="cta-box">
@@ -338,85 +343,61 @@
             observer.observe(el);
         });
 
-        // Fietsenwijk XML Feed Integration via Node.js Proxy
-        const PROXY_URL = '/api/fietsen';
-        let allFietsen = [];
-
-        async function fetchFietsen(state = '0') {
-            const grid = document.getElementById('fietsen-grid');
-            grid.innerHTML = '<div class="loading-message">Fietsen worden geladen vanuit Fietsenwijk.nl...</div>';
+        // Fietsenwijk Voorraad Filter
+        function loadVoorraad(category, btn) {
+            const frame = document.getElementById('fietsenwijk-frame');
+            const baseUrl = 'https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/';
+            const cssUrl = window.location.origin + '/fietsenwijk.css';
             
-            try {
-                const url = `${PROXY_URL}?cat=${state}`;
-                const response = await fetch(url);
-                
-                if (!response.ok) {
-                    throw new Error('Kon fietsen niet laden');
-                }
-                
-                const data = await response.json();
-                
-                if (!data.success) {
-                    throw new Error(data.error || 'Onbekende fout');
-                }
-                
-                allFietsen = data.fietsen;
-                renderFietsen(allFietsen);
-                
-            } catch (error) {
-                console.error('Error fetching fietsen:', error);
-                grid.innerHTML = `
-                    <div class="error-message">
-                        <p>Kon de fietsen niet laden van Fietsenwijk.nl.</p>
-                        <p><small>${error.message}</small></p>
-                        <p><a href="#contact" class="btn btn-primary">Neem contact op voor het aanbod</a></p>
-                    </div>
-                `;
-            }
+            frame.src = `${baseUrl}?cat=${category}&css=${encodeURIComponent(cssUrl)}`;
+            
+            // Update active button
+            document.querySelectorAll('.voorraad-filter .filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
-        function renderFietsen(fietsen) {
-            const grid = document.getElementById('fietsen-grid');
-            
-            if (fietsen.length === 0) {
-                grid.innerHTML = '<div class="empty-message">Geen fietsen gevonden met deze filter. <a href="#contact">Neem contact op</a> voor meer informatie.</div>';
-                return;
-            }
-            
-            grid.innerHTML = fietsen.map(fiets => {
-                // Use the image from the feed, or fallback to local image
-                const imageUrl = fiets.image && fiets.image !== '' ? fiets.image : 'images/showroom-fietsen.jpg';
-                
-                return `
-                <div class="fiets-card" data-state="${fiets.state}">
-                    <div class="fiets-badge ${fiets.state}">${fiets.stateLabel}</div>
-                    <div class="fiets-image" style="background-image: url('${imageUrl}'); background-size: cover; background-position: center;"></div>
-                    <div class="fiets-content">
-                        <h3 class="fiets-title">${fiets.title}</h3>
-                        <p class="fiets-price">${fiets.price}</p>
-                        <ul class="fiets-specs">
-                            ${fiets.specs.map(spec => `<li>• ${spec}</li>`).join('')}
-                        </ul>
-                        <a href="${fiets.url !== '#' ? fiets.url : '#contact'}" class="btn btn-primary btn-small" ${fiets.url !== '#' ? 'target="_blank"' : ''}>Meer info</a>
-                    </div>
-                </div>
-            `}).join('');
-        }
-
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const filter = btn.dataset.filter;
-                const stateMap = { 'all': '0', 'new': '2', 'used': '1' };
-                fetchFietsen(stateMap[filter]);
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
-
-        // Load fietsen on page load
-        fetchFietsen('0');
+        
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.feature-card, .bike-card, .service-item').forEach((el) => {
+            el.classList.add('reveal');
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,116 @@
+/* Bus vol Bikes - Fietsenwijk.nl Voorraadlijst Styling */
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    color: #0f172a;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+td {
+    padding: 16px;
+    font-size: 15px;
+    color: #334155;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+tr:hover td {
+    background: #f8fafc;
+}
+
+hr {
+    border: none;
+    border-top: 2px solid #22c55e;
+    margin: 24px 0;
+}
+
+.koptext {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.prijs {
+    font-size: 20px;
+    font-weight: 700;
+    color: #22c55e;
+}
+
+a {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #16a34a;
+    text-decoration: underline;
+}
+
+/* Fiets afbeelding styling */
+img {
+    border-radius: 8px;
+    max-width: 200px;
+    height: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Badge voor nieuw/gebruikt */
+.nieuw-badge, .gebruikt-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.nieuw-badge {
+    background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+    color: white;
+}
+
+.gebruikt-badge {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+/* Responsief */
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+    
+    td {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    .koptext {
+        font-size: 20px;
+    }
+    
+    .prijs {
+        font-size: 18px;
+    }
+    
+    img {
+        max-width: 150px;
+    }
+}

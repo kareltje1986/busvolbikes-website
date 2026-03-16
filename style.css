@@ -629,6 +629,30 @@ body {
     padding: var(--space-lg);
 }
 
+/* Voorraad iframe styling */
+.voorraad-filter {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.voorraad-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.voorraad-container iframe {
+    width: 100%;
+    min-height: 800px;
+    border: none;
+    display: block;
+}
+
 .fiets-title {
     font-size: 1.125rem;
     font-weight: 700;
