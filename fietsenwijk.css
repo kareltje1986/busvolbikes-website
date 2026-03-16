@@ -40,17 +40,17 @@ td {
     display: contents;
 }
 
-/* Image styling - smaller and sharper */
+/* Image styling - natural size, no upscaling */
 td img {
-    width: 100% !important;
+    width: auto !important;
     max-width: 100% !important;
-    height: 140px !important;
+    height: auto !important;
+    max-height: 120px !important;
     object-fit: contain !important;
     object-position: center !important;
     display: block;
     order: 1;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    margin: 0 auto;
 }
 
 /* Title */
@@ -109,7 +109,7 @@ hr {
     }
     
     td img {
-        height: 120px !important;
+        max-height: 100px !important;
     }
 }
 
@@ -125,7 +125,7 @@ hr {
     }
     
     td img {
-        height: 160px !important;
+        max-height: 140px !important;
     }
     
     .koptext {
