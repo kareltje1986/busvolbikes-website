@@ -16,69 +16,60 @@ table {
     background: transparent;
 }
 
-/* Each bike as a card */
+/* Each bike as a card - using flex to reorder content */
 tbody tr {
-    display: block;
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
     background: #ffffff;
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
 /* Table cell becomes card content */
 td {
-    display: block;
-    padding: 0;
-    width: 100%;
+    display: contents; /* Allow children to be flex items */
 }
 
-/* Image styling - FULL WIDTH on top */
+/* Image styling - FIRST in order */
 td img {
     width: 100% !important;
     max-width: 100% !important;
-    height: 220px !important;
+    height: 240px !important;
     object-fit: cover !important;
     display: block;
-    border-radius: 0;
-    margin: 0 !important;
+    order: 1; /* Force image to be first */
 }
 
-/* Content area below image */
-td > table,
-td > font,
-td > span,
-td > a,
-td > div {
-    padding: 0 20px;
-}
-
-/* Title */
+/* Title - AFTER image */
 .koptext {
     font-size: 20px;
     font-weight: 700;
     color: #0f172a;
-    margin: 20px 20px 8px 20px;
+    padding: 20px 20px 8px 20px;
     display: block;
+    order: 2;
 }
 
-/* Description text */
+/* Description - AFTER title */
 td font:not(.koptext):not(.prijs),
-td span {
+td span:not(.prijs):not(.koptext) {
     color: #64748b;
     font-size: 15px;
-    margin: 0 20px 12px 20px;
+    padding: 0 20px 12px 20px;
     display: block;
-    line-height: 1.5;
+    order: 3;
 }
 
-/* Price */
+/* Price - LAST */
 .prijs {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
     color: #22c55e;
-    margin: 8px 20px 20px 20px;
+    padding: 8px 20px 20px 20px;
     display: block;
+    order: 4;
 }
 
 /* Links */
@@ -107,22 +98,22 @@ hr {
     }
     
     td img {
-        height: 180px !important;
+        height: 200px !important;
     }
     
     .koptext {
         font-size: 18px;
-        margin: 16px 16px 6px 16px;
+        padding: 16px 16px 6px 16px;
     }
     
     .prijs {
-        font-size: 24px;
-        margin: 6px 16px 16px 16px;
+        font-size: 26px;
+        padding: 6px 16px 16px 16px;
     }
     
     td font:not(.koptext):not(.prijs),
-    td span {
-        margin: 0 16px 10px 16px;
+    td span:not(.prijs):not(.koptext) {
+        padding: 0 16px 10px 16px;
         font-size: 14px;
     }
 }
