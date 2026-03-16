@@ -1,20 +1,13 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-# Enable mod_rewrite
-RUN a2enmod rewrite
+# Install required PHP extensions
+RUN docker-php-ext-install curl
 
 # Copy website files
-COPY . /var/www/html/
+COPY . /app/
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
+# Set working directory
+WORKDIR /app
 
-# Enable .htaccess
-RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
-
-# Copy and configure entrypoint
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-# Use entrypoint script
-ENTRYPOINT ["docker-entrypoint.sh"]
+# Start PHP built-in server on Railway's PORT
+CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t ."]
