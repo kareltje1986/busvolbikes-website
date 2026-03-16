@@ -396,8 +396,15 @@ body {
 }
 
 .feature-icon {
-    font-size: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+}
+
+.feature-icon svg {
+    width: 100%;
+    height: 100%;
 }
 
 .feature-card h3 {
