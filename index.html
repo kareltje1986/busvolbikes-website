@@ -338,86 +338,40 @@
             observer.observe(el);
         });
 
-        // Fietsenwijk XML Feed Integration
-        const XML_FEED_BASE = 'https://F6EA9296200A4E168099E73DF284025B.hst.fietsenwijk.nl/fietsen/xml/';
+        // Fietsenwijk XML Feed Integration via Proxy
+        const PROXY_URL = './api/fietsen.php';
         let allFietsen = [];
 
         async function fetchFietsen(state = '0') {
             const grid = document.getElementById('fietsen-grid');
-            grid.innerHTML = '<div class="loading-message">Fietsen worden geladen...</div>';
+            grid.innerHTML = '<div class="loading-message">Fietsen worden geladen vanuit Fietsenwijk.nl...</div>';
             
             try {
-                // Use a CORS proxy or fetch directly if supported
-                const url = `${XML_FEED_BASE}?cat=${state}`;
+                const url = `${PROXY_URL}?cat=${state}`;
+                const response = await fetch(url);
                 
-                // For demo purposes, simulate XML data
-                // In production, you'd use: await fetch(url) with proper CORS handling
-                
-                // Simulated data for demonstration
-                const mockData = [
-                    {
-                        title: 'Qwic Premium MN7',
-                        state: 'used',
-                        stateLabel: 'Gebruikt',
-                        price: '€1.899,-',
-                        image: 'images/fiets-spotlight.jpg',
-                        specs: ['49cm frame', 'Bafang middenmotor', '50-80km actieradius']
-                    },
-                    {
-                        title: 'Gazelle Grenoble C7',
-                        state: 'new',
-                        stateLabel: 'Nieuw',
-                        price: '€2.499,-',
-                        image: 'images/fiets-zijaanzicht.jpg',
-                        specs: ['53cm frame', 'Bosch middenmotor', '70-120km actieradius']
-                    },
-                    {
-                        title: 'Cortina E-Transport',
-                        state: 'used',
-                        stateLabel: 'Gebruikt',
-                        price: '€1.599,-',
-                        image: 'images/showroom-fietsen.jpg',
-                        specs: ['57cm frame', 'Bafang voorwielmotor', '40-60km actieradius']
-                    },
-                    {
-                        title: 'Giant DailyTour E+',
-                        state: 'new',
-                        stateLabel: 'Nieuw',
-                        price: '€2.199,-',
-                        image: 'images/gezin-fietsen.jpg',
-                        specs: ['50cm frame', 'Yamaha middenmotor', '60-100km actieradius']
-                    },
-                    {
-                        title: 'Cube Kathmandu Hybrid',
-                        state: 'used',
-                        stateLabel: 'Gebruikt',
-                        price: '€2.299,-',
-                        image: 'images/voorraad-buiten.jpg',
-                        specs: ['56cm frame', 'Bosch middenmotor', '60-110km actieradius']
-                    },
-                    {
-                        title: 'Scott Sub Active eRIDE',
-                        state: 'new',
-                        stateLabel: 'Nieuw',
-                        price: '€2.899,-',
-                        image: 'images/fiets-spotlight.jpg',
-                        specs: ['54cm frame', 'Bosch middenmotor', '70-120km actieradius']
-                    }
-                ];
-                
-                // Filter based on state parameter
-                if (state !== '0') {
-                    const stateMap = { '1': 'used', '2': 'new' };
-                    allFietsen = mockData.filter(f => f.state === stateMap[state]);
-                } else {
-                    allFietsen = mockData;
+                if (!response.ok) {
+                    throw new Error('Kon fietsen niet laden');
                 }
                 
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Onbekende fout');
+                }
+                
+                allFietsen = data.fietsen;
                 renderFietsen(allFietsen);
                 
             } catch (error) {
                 console.error('Error fetching fietsen:', error);
-                grid.innerHTML = '<div class="error-message">Kon fietsen niet laden. <a href="#contact">Neem contact op</a> voor het actuele aanbod.</div>';
+                grid.innerHTML = `
+                    <div class="error-message">
+                        <p>Kon de fietsen niet laden van Fietsenwijk.nl.</p>
+                        <p><small>${error.message}</small></p>
+                        <p><a href="#contact" class="btn btn-primary">Neem contact op voor het aanbod</a></p>
+                    </div>
+                `;
             }
         }
 
@@ -425,24 +379,28 @@
             const grid = document.getElementById('fietsen-grid');
             
             if (fietsen.length === 0) {
-                grid.innerHTML = '<div class="empty-message">Geen fietsen gevonden met deze filter.</div>';
+                grid.innerHTML = '<div class="empty-message">Geen fietsen gevonden met deze filter. <a href="#contact">Neem contact op</a> voor meer informatie.</div>';
                 return;
             }
             
-            grid.innerHTML = fietsen.map(fiets => `
+            grid.innerHTML = fietsen.map(fiets => {
+                // Use the image from the feed, or fallback to local image
+                const imageUrl = fiets.image && fiets.image !== '' ? fiets.image : 'images/showroom-fietsen.jpg';
+                
+                return `
                 <div class="fiets-card" data-state="${fiets.state}">
                     <div class="fiets-badge ${fiets.state}">${fiets.stateLabel}</div>
-                    <div class="fiets-image" style="background-image: url('${fiets.image}'); background-size: cover; background-position: center;"></div>
+                    <div class="fiets-image" style="background-image: url('${imageUrl}'); background-size: cover; background-position: center;"></div>
                     <div class="fiets-content">
                         <h3 class="fiets-title">${fiets.title}</h3>
                         <p class="fiets-price">${fiets.price}</p>
                         <ul class="fiets-specs">
                             ${fiets.specs.map(spec => `<li>• ${spec}</li>`).join('')}
                         </ul>
-                        <a href="#contact" class="btn btn-primary btn-small">Meer info</a>
+                        <a href="${fiets.url !== '#' ? fiets.url : '#contact'}" class="btn btn-primary btn-small" ${fiets.url !== '#' ? 'target="_blank"' : ''}>Meer info</a>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         // Filter buttons
