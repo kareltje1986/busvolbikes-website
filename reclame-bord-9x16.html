@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus vol Bikes - Reclame 9:16</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* 9:16 aspect ratio container (1080x1920 is standaard formaat) */
+        .billboard {
+            width: 1080px;
+            height: 1920px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Achtergrond animatie */
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 80%, #22c55e 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, #22c55e 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.1); }
+        }
+        
+        /* Logo container */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            animation: logoIn 10s ease-out infinite;
+        }
+        
+        @keyframes logoIn {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5) translateY(50px); 
+            }
+            10% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            }
+            85% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            95% {
+                opacity: 0;
+                transform: scale(0.9) translateY(-30px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+        }
+        
+        /* Logo styling */
+        .logo {
+            width: 400px;
+            height: 400px;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 20px 60px rgba(34, 197, 94, 0.3));
+        }
+        
+        /* Glow effect achter logo */
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 10s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        /* Tekst styling */
+        .tagline {
+            font-size: 72px;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .tagline span {
+            color: #22c55e;
+            display: block;
+            font-size: 96px;
+            margin-top: 10px;
+        }
+        
+        /* USP lijst */
+        .usp-list {
+            list-style: none;
+            text-align: center;
+            margin-top: 60px;
+            animation: uspIn 10s ease-out infinite;
+        }
+        
+        @keyframes uspIn {
+            0%, 20% { opacity: 0; transform: translateY(30px); }
+            30% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            95% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+        
+        .usp-item {
+            font-size: 48px;
+            color: #e2e8f0;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .usp-icon {
+            color: #22c55e;
+            font-size: 56px;
+        }
+        
+        /* Contact info onderaan */
+        .contact-info {
+            position: absolute;
+            bottom: 120px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            animation: contactIn 10s ease-out infinite;
+        }
+        
+        @keyframes contactIn {
+            0%, 40% { opacity: 0; transform: translateY(30px); }
+            50% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            95% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 0; transform: translateY(30px); }
+        }
+        
+        .contact-text {
+            font-size: 42px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        
+        .contact-url {
+            font-size: 56px;
+            font-weight: 700;
+            color: #22c55e;
+        }
+        
+        /* Fiets emoji animatie */
+        .bike-emoji {
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            animation: bikeFloat 10s ease-in-out infinite;
+        }
+        
+        .bike-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .bike-2 { top: 20%; right: 15%; animation-delay: 2s; }
+        .bike-3 { bottom: 30%; left: 8%; animation-delay: 4s; }
+        .bike-4 { bottom: 20%; right: 10%; animation-delay: 6s; }
+        
+        @keyframes bikeFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-30px) rotate(10deg); opacity: 0.2; }
+        }
+        
+        /* Voor screen recording - instruction overlay */
+        .recording-tip {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .recording-tip button {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        /* Preview mode - schaalbaar voor testen */
+        @media (max-width: 1200px) {
+            .billboard {
+                transform: scale(0.4);
+                transform-origin: center;
+            }
+        }
+        
+        /* Animatie pauzeren voor screenshot */
+        .paused * {
+            animation-play-state: paused !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tip voor opname -->
+    <div class="recording-tip" id="tip">
+        <strong>🎬 Opname modus</strong><br>
+        1. Verberg deze tip (klik X)<br>
+        2. Start screen recording<br>
+        3. Laat 10 seconden lopen<br>
+        4. Sla op als MP4/JPG<br>
+        <button onclick="hideTip()">Verberg tip</button>
+        <button onclick="togglePause()">⏸️ Pauze</button>
+    </div>
+
+    <!-- Het 9:16 billboard -->
+    <div class="billboard" id="billboard">
+        <!-- Achtergrond -->
+        <div class="bg-pattern"></div>
+        
+        <!-- Zwevende fiets emoji's -->
+        <div class="bike-emoji bike-1">🚲</div>
+        <div class="bike-emoji bike-2">🚴</div>
+        <div class="bike-emoji bike-3">🚲</div>
+        <div class="bike-emoji bike-4">🚴‍♀️</div>
+        
+        <!-- Glow achter logo -->
+        <div class="logo-glow"></div>
+        
+        <!-- Hoofd content -->
+        <div class="logo-container">
+            <!-- Logo (SVG inline voor scherpte) -->
+            <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#22c55e"/>
+                        <stop offset="100%" style="stop-color:#16a34a"/>
+                    </linearGradient>
+                </defs>
+                <!-- Cirkel achtergrond -->
+                <circle cx="100" cy="100" r="90" fill="url(#logoGrad)"/>
+                <!-- Fiets icoon (vereenvoudigd) -->
+                <g fill="white" transform="translate(40, 50) scale(0.6)">
+                    <!-- Wielen -->
+                    <circle cx="30" cy="100" r="28" fill="none" stroke="white" stroke-width="8"/>
+                    <circle cx="170" cy="100" r="28" fill="none" stroke="white" stroke-width="8"/>
+                    <!-- Frame -->
+                    <path d="M30 100 L70 40 L130 40 L100 100 M70 40 L60 100 M130 40 L150 25" 
+                          fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                    <!-- Zadel & stuur -->
+                    <path d="M55 25 L85 25 M140 25 L160 25 M150 25 L150 15" 
+                          stroke="white" stroke-width="6" stroke-linecap="round"/>
+                </g>
+            </svg>
+            
+            <!-- Tagline -->
+            <h1 class="tagline">
+                Van fietsenzaak
+                <span>naar jou!</span>
+            </h1>
+            
+            <!-- USP's -->
+            <ul class="usp-list">
+                <li class="usp-item">
+                    <span class="usp-icon">✓</span>
+                    6 maanden garantie
+                </li>
+                <li class="usp-item">
+                    <span class="usp-icon">✓</span>
+                    Rijklaar geleverd
+                </li>
+                <li class="usp-item">
+                    <span class="usp-icon">✓</span>
+                    Ook 's avonds open
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Contact info -->
+        <div class="contact-info">
+            <p class="contact-text">Bekijk onze voorraad op</p>
+            <p class="contact-url">Marktplaats</p>
+            <p class="contact-text" style="margin-top: 20px; font-size: 36px;">
+                Zoek op: Bus vol Bikes
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function hideTip() {
+            document.getElementById('tip').style.display = 'none';
+        }
+        
+        function togglePause() {
+            document.getElementById('billboard').classList.toggle('paused');
+        }
+        
+        // Automatisch pauzeren na 1 cyclus (voor screenshot)
+        setTimeout(function() {
+            // Uncomment om auto-pauze aan te zetten:
+            // document.getElementById('billboard').classList.add('paused');
+        }, 10000);
+    </script>
+</body>
+</html>
