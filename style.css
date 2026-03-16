@@ -185,18 +185,16 @@ body {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-    pointer-events: none;
+    z-index: 0;
 }
 
-.hero::before {
+.hero-bg::before {
     content: '';
     position: absolute;
     inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     opacity: 0.5;
+    z-index: 1;
 }
 
 .hero-content {
@@ -407,6 +405,73 @@ body {
 .feature-card p {
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* Location Section */
+.location-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-3xl);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.location-image {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.location-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.location-content h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: var(--space-sm) 0 var(--space-md);
+    color: var(--text-primary);
+}
+
+.location-content p {
+    color: var(--text-secondary);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: var(--space-lg);
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.info-icon {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .location-section {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    
+    .location-content {
+        order: -1;
+    }
 }
 
 /* Bikes Section */
