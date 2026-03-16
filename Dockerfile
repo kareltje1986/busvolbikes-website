@@ -1,13 +1,19 @@
-FROM php:8.2-cli
-
-# Install required PHP extensions
-RUN docker-php-ext-install curl
-
-# Copy website files
-COPY . /app/
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Start PHP built-in server on Railway's PORT
-CMD ["sh", "-c", "php -S 0.0.0.0:$PORT -t ."]
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy all files
+COPY . .
+
+# Expose port
+EXPOSE ${PORT:-3000}
+
+# Start the server
+CMD ["npm", "start"]
