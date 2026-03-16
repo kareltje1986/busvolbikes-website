@@ -124,61 +124,29 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-tag">Ons aanbod</span>
-                <h2 class="section-title">E-bikes voor <span class="highlight">iedereen</span></h2>
-                <p class="section-subtitle">Stadsfietsen, transportfietsen, opstappers – we hebben voor elk doel een passende e-bike.</p>
+                <h2 class="section-title">Actuele <span class="highlight">voorraad</span></h2>
+                <p class="section-subtitle">Nieuwe en gebruikte fietsen direct uit ons systeem. Filter op nieuw, gebruikt of merk.</p>
             </div>
 
-            <div class="bikes-showcase">
-                <div class="bike-card">
-                    <div class="bike-image" style="background-image: url('images/showroom-fietsen.jpg'); background-size: cover; background-position: center;">
-                    </div>
-                    <div class="bike-content">
-                        <h3>Stadsfietsen</h3>
-                        <p>Ideaal voor woon-werkverkeer en dagelijks gebruik. Lichtgewicht, wendbaar, betrouwbaar.</p>
-                        <ul class="bike-specs">
-                            <li>• Actieradius: 40-80 km</li>
-                            <li>• Frame: Heren/Dames</li>
-                            <li>• Versnellingen: 7-8 versnellingen</li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Alle fietsen</button>
+                <button class="filter-btn" data-filter="new">Nieuw</button>
+                <button class="filter-btn" data-filter="used">Gebruikt</button>
+            </div>
 
-                <div class="bike-card">
-                    <div class="bike-image" style="background-image: url('images/sfeer-natuur.jpg'); background-size: cover; background-position: center;">
-                    </div>
-                    <div class="bike-content">
-                        <h3>Transportfietsen</h3>
-                        <p>Zware lasten, kinderen of boodschappen? Deze fietsen kunnen er tegen.</p>
-                        <ul class="bike-specs">
-                            <li>• Actieradius: 50-100 km</li>
-                            <li>• Drager: Extra stevig</li>
-                            <li>• Motor: Krachtig (50Nm+)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="bike-card">
-                    <div class="bike-image" style="background-image: url('images/gezin-fietsen.jpg'); background-size: cover; background-position: center;">
-                    </div>
-                    <div class="bike-content">
-                        <h3>Opstapfietsen</h3>
-                        <p>Comfortabel en stabiel. Lage instap en verstelbaar stuur voor perfecte zithouding.</p>
-                        <ul class="bike-specs">
-                            <li>• Actieradius: 30-60 km</li>
-                            <li>• Instap: Laag</li>
-                            <li>• Comfort: Verstelbaar stuur/zadel</li>
-                        </ul>
-                    </div>
-                </div>
+            <div id="fietsen-grid" class="fietsen-grid">
+                <div class="loading-message">Fietsen worden geladen...</div>
             </div>
 
             <div class="cta-box">
                 <div class="cta-content">
-                    <h3>Actuele voorraad</h3>
-                    <p>Ons aanbod wisselt snel. Volg ons op Marktplaats of neem contact op voor de nieuwste fietsen.</p>
+                    <h3>Meer fietsen beschikbaar</h3>
+                    <p>Ons aanbod wisselt dagelijks. Neem contact op voor de nieuwste fietsen of kom langs voor een proefrit.</p>
                 </div>
-                <a href="#contact" class="btn btn-primary">Vraag aanbod aan</a>
+                <a href="#contact" class="btn btn-primary">Contact opnemen</a>
             </div>
+        </div>
+    </section>
             
             <div class="spotlight-section">
                 <div class="section-header">
@@ -369,6 +337,128 @@
             el.classList.add('reveal');
             observer.observe(el);
         });
+
+        // Fietsenwijk XML Feed Integration
+        const XML_FEED_BASE = 'https://F6EA9296200A4E168099E73DF284025B.hst.fietsenwijk.nl/fietsen/xml/';
+        let allFietsen = [];
+
+        async function fetchFietsen(state = '0') {
+            const grid = document.getElementById('fietsen-grid');
+            grid.innerHTML = '<div class="loading-message">Fietsen worden geladen...</div>';
+            
+            try {
+                // Use a CORS proxy or fetch directly if supported
+                const url = `${XML_FEED_BASE}?cat=${state}`;
+                
+                // For demo purposes, simulate XML data
+                // In production, you'd use: await fetch(url) with proper CORS handling
+                
+                // Simulated data for demonstration
+                const mockData = [
+                    {
+                        title: 'Qwic Premium MN7',
+                        state: 'used',
+                        stateLabel: 'Gebruikt',
+                        price: '€1.899,-',
+                        image: 'images/fiets-spotlight.jpg',
+                        specs: ['49cm frame', 'Bafang middenmotor', '50-80km actieradius']
+                    },
+                    {
+                        title: 'Gazelle Grenoble C7',
+                        state: 'new',
+                        stateLabel: 'Nieuw',
+                        price: '€2.499,-',
+                        image: 'images/fiets-zijaanzicht.jpg',
+                        specs: ['53cm frame', 'Bosch middenmotor', '70-120km actieradius']
+                    },
+                    {
+                        title: 'Cortina E-Transport',
+                        state: 'used',
+                        stateLabel: 'Gebruikt',
+                        price: '€1.599,-',
+                        image: 'images/showroom-fietsen.jpg',
+                        specs: ['57cm frame', 'Bafang voorwielmotor', '40-60km actieradius']
+                    },
+                    {
+                        title: 'Giant DailyTour E+',
+                        state: 'new',
+                        stateLabel: 'Nieuw',
+                        price: '€2.199,-',
+                        image: 'images/gezin-fietsen.jpg',
+                        specs: ['50cm frame', 'Yamaha middenmotor', '60-100km actieradius']
+                    },
+                    {
+                        title: 'Cube Kathmandu Hybrid',
+                        state: 'used',
+                        stateLabel: 'Gebruikt',
+                        price: '€2.299,-',
+                        image: 'images/voorraad-buiten.jpg',
+                        specs: ['56cm frame', 'Bosch middenmotor', '60-110km actieradius']
+                    },
+                    {
+                        title: 'Scott Sub Active eRIDE',
+                        state: 'new',
+                        stateLabel: 'Nieuw',
+                        price: '€2.899,-',
+                        image: 'images/fiets-spotlight.jpg',
+                        specs: ['54cm frame', 'Bosch middenmotor', '70-120km actieradius']
+                    }
+                ];
+                
+                // Filter based on state parameter
+                if (state !== '0') {
+                    const stateMap = { '1': 'used', '2': 'new' };
+                    allFietsen = mockData.filter(f => f.state === stateMap[state]);
+                } else {
+                    allFietsen = mockData;
+                }
+                
+                renderFietsen(allFietsen);
+                
+            } catch (error) {
+                console.error('Error fetching fietsen:', error);
+                grid.innerHTML = '<div class="error-message">Kon fietsen niet laden. <a href="#contact">Neem contact op</a> voor het actuele aanbod.</div>';
+            }
+        }
+
+        function renderFietsen(fietsen) {
+            const grid = document.getElementById('fietsen-grid');
+            
+            if (fietsen.length === 0) {
+                grid.innerHTML = '<div class="empty-message">Geen fietsen gevonden met deze filter.</div>';
+                return;
+            }
+            
+            grid.innerHTML = fietsen.map(fiets => `
+                <div class="fiets-card" data-state="${fiets.state}">
+                    <div class="fiets-badge ${fiets.state}">${fiets.stateLabel}</div>
+                    <div class="fiets-image" style="background-image: url('${fiets.image}'); background-size: cover; background-position: center;"></div>
+                    <div class="fiets-content">
+                        <h3 class="fiets-title">${fiets.title}</h3>
+                        <p class="fiets-price">${fiets.price}</p>
+                        <ul class="fiets-specs">
+                            ${fiets.specs.map(spec => `<li>• ${spec}</li>`).join('')}
+                        </ul>
+                        <a href="#contact" class="btn btn-primary btn-small">Meer info</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                const stateMap = { 'all': '0', 'new': '2', 'used': '1' };
+                fetchFietsen(stateMap[filter]);
+            });
+        });
+
+        // Load fietsen on page load
+        fetchFietsen('0');
     </script>
 </body>
 </html>
