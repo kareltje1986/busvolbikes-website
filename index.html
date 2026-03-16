@@ -338,8 +338,8 @@
             observer.observe(el);
         });
 
-        // Fietsenwijk XML Feed Integration via Proxy
-        const PROXY_URL = './api/fietsen.php';
+        // Fietsenwijk XML Feed Integration via Node.js Proxy
+        const PROXY_URL = '/api/fietsen';
         let allFietsen = [];
 
         async function fetchFietsen(state = '0') {
