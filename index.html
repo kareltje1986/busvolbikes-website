@@ -129,13 +129,14 @@
             </div>
 
             <div class="voorraad-filter">
-                <button class="filter-btn active" onclick="loadVoorraad('1', this)">Gebruikte fietsen</button>
-                <button class="filter-btn" onclick="loadVoorraad('2', this)">Nieuwe fietsen</button>
+                <button class="filter-btn active" onclick="loadVoorraad('0', this)">Alle fietsen</button>
+                <button class="filter-btn" onclick="loadVoorraad('1', this)">Gebruikt</button>
+                <button class="filter-btn" onclick="loadVoorraad('2', this)">Nieuw</button>
             </div>
 
             <div class="voorraad-container">
                 <iframe id="fietsenwijk-frame" 
-                        src="https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/?cat=1&css=https://busvolbikes-website-production.up.railway.app/fietsenwijk.css" 
+                        src="https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/?css=https://busvolbikes-website-production.up.railway.app/fietsenwijk.css" 
                         width="100%" 
                         height="800" 
                         frameborder="0"
@@ -349,7 +350,12 @@
             const baseUrl = 'https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/';
             const cssUrl = window.location.origin + '/fietsenwijk.css';
             
-            frame.src = `${baseUrl}?cat=${category}&css=${encodeURIComponent(cssUrl)}`;
+            let url = `${baseUrl}?css=${encodeURIComponent(cssUrl)}`;
+            if (category && category !== '0') {
+                url += `&cat=${category}`;
+            }
+            
+            frame.src = url;
             
             // Update active button
             document.querySelectorAll('.voorraad-filter .filter-btn').forEach(b => b.classList.remove('active'));
