@@ -2,77 +2,86 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #ffffff;
+    background: #f8fafc;
     color: #0f172a;
     margin: 0;
-    padding: 20px;
-    line-height: 1.6;
+    padding: 16px;
+    line-height: 1.5;
 }
 
+/* Main container */
 table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 20px;
+    border-collapse: collapse;
     background: transparent;
 }
 
-td {
-    padding: 0;
-    font-size: 15px;
-    color: #334155;
-    vertical-align: top;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+/* Each bike as a card */
+tbody tr {
     display: block;
     margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
 }
 
-tr:hover td {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
+/* Table cell becomes card content */
+td {
+    display: block;
+    padding: 0;
+    width: 100%;
 }
 
-hr {
-    border: none;
-    border-top: 2px solid #22c55e;
-    margin: 24px 0;
-}
-
-/* Layout: Image on top, text below */
+/* Image styling - FULL WIDTH on top */
 td img {
     width: 100% !important;
     max-width: 100% !important;
-    height: auto !important;
+    height: 220px !important;
+    object-fit: cover !important;
     display: block;
-    border-radius: 12px 12px 0 0;
+    border-radius: 0;
+    margin: 0 !important;
 }
 
 /* Content area below image */
-td > *:not(img) {
-    padding: 16px 20px;
+td > table,
+td > font,
+td > span,
+td > a,
+td > div {
+    padding: 0 20px;
 }
 
+/* Title */
 .koptext {
     font-size: 20px;
     font-weight: 700;
     color: #0f172a;
-    margin: 0 0 8px 0;
-    padding: 16px 20px 8px 20px !important;
+    margin: 20px 20px 8px 20px;
     display: block;
 }
 
+/* Description text */
+td font:not(.koptext):not(.prijs),
+td span {
+    color: #64748b;
+    font-size: 15px;
+    margin: 0 20px 12px 20px;
+    display: block;
+    line-height: 1.5;
+}
+
+/* Price */
 .prijs {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
     color: #22c55e;
-    margin: 8px 0 16px 0;
-    padding: 0 20px 16px 20px !important;
+    margin: 8px 20px 20px 20px;
     display: block;
 }
 
+/* Links */
 a {
     color: #22c55e;
     text-decoration: none;
@@ -81,76 +90,39 @@ a {
 
 a:hover {
     color: #16a34a;
-    text-decoration: underline;
 }
 
-/* Description text */
-td font,
-td span:not(.koptext):not(.prijs) {
-    color: #64748b;
-    font-size: 14px;
-    padding: 0 20px !important;
-    display: block;
-}
-
-/* Remove table borders and spacing for mobile-friendly layout */
-table tbody,
-table tr {
-    display: block;
-    width: 100%;
-}
-
-tr {
-    margin-bottom: 0;
-}
-
-/* Category headers */
-h1, h2, h3 {
-    color: #0f172a;
-    font-weight: 700;
-    margin: 24px 0 16px 0;
-}
-
-/* Badge styling for state indicators */
-.gebruikt-badge,
-.nieuw-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 9999px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 0 20px 16px 20px;
-}
-
-.nieuw-badge {
-    background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
-    color: white;
-}
-
-.gebruikt-badge {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    color: white;
+/* Horizontal rule styling */
+hr {
+    border: none;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 24px 0;
 }
 
 /* Responsief */
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     body {
         padding: 12px;
     }
     
-    td {
-        margin-bottom: 16px;
+    td img {
+        height: 180px !important;
     }
     
     .koptext {
         font-size: 18px;
-        padding: 12px 16px 8px 16px !important;
+        margin: 16px 16px 6px 16px;
     }
     
     .prijs {
-        font-size: 22px;
-        padding: 0 16px 12px 16px !important;
+        font-size: 24px;
+        margin: 6px 16px 16px 16px;
+    }
+    
+    td font:not(.koptext):not(.prijs),
+    td span {
+        margin: 0 16px 10px 16px;
+        font-size: 14px;
     }
 }
