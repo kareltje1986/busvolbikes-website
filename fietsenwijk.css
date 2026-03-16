@@ -40,16 +40,17 @@ td {
     display: contents;
 }
 
-/* Image styling - sharp and clear */
+/* Image styling - smaller and sharper */
 td img {
     width: 100% !important;
     max-width: 100% !important;
-    height: 200px !important;
-    object-fit: cover !important;
+    height: 140px !important;
+    object-fit: contain !important;
     object-position: center !important;
     display: block;
     order: 1;
-    transform: scale(1);
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 /* Title */
@@ -108,7 +109,7 @@ hr {
     }
     
     td img {
-        height: 160px !important;
+        height: 120px !important;
     }
 }
 
@@ -124,7 +125,7 @@ hr {
     }
     
     td img {
-        height: 200px !important;
+        height: 160px !important;
     }
     
     .koptext {
