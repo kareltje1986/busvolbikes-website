@@ -9,35 +9,39 @@ async function scrapeFietsen() {
     try {
         console.log('Fietsen ophalen van Fietsenwijk...');
         
-        // Haal HTML op van fietsenwijk
-        const response = await axios.get(FEITSENWIJK_URL, {
-            timeout: 30000,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (compatible; BusVolBikes/1.0)',
-                'Accept': 'text/html'
-            },
-            responseEncoding: 'binary'
-        });
+        // Haal zowel gebruikte (cat=1) als nieuwe (cat=2) fietsen op
+        const [gebruiktHtml, nieuwHtml] = await Promise.all([
+            fetchFietsenHTML(1),  // Gebruikt
+            fetchFietsenHTML(2)   // Nieuw
+        ]);
         
-        // Converteer van latin1 (iso-8859-1) naar utf-8
-        const html = Buffer.from(response.data, 'binary').toString('utf8');
+        // Parse beide categorieën
+        const gebruikteFietsen = parseFietsenFromHTML(gebruiktHtml, 'Gebruikt');
+        const nieuweFietsen = parseFietsenFromHTML(nieuwHtml, 'Nieuw');
         
-        // Parse fietsen uit HTML
-        const fietsen = parseFietsenFromHTML(html);
+        // Combineer en verwijder duplicaten (op ID)
+        const alleFietsen = [...gebruikteFietsen, ...nieuweFietsen];
+        const uniekeFietsen = verwijderDuplicaten(alleFietsen);
         
-        if (fietsen.length === 0) {
+        if (uniekeFietsen.length === 0) {
             console.log('⚠️  Geen fietsen gevonden');
             return;
         }
         
+        console.log(`   Gebruikt: ${gebruikteFietsen.length} fietsen`);
+        console.log(`   Nieuw: ${nieuweFietsen.length} fietsen`);
+        console.log(`   Totaal uniek: ${uniekeFietsen.length} fietsen`);
+        
         // Sorteer op titel
-        fietsen.sort((a, b) => a.titel.localeCompare(b.titel));
+        uniekeFietsen.sort((a, b) => a.titel.localeCompare(b.titel));
         
         // Maak output object
         const output = {
             laatsteUpdate: new Date().toISOString(),
-            aantal: fietsen.length,
-            fietsen: fietsen
+            aantal: uniekeFietsen.length,
+            gebruikt: gebruikteFietsen.length,
+            nieuw: nieuweFietsen.length,
+            fietsen: uniekeFietsen
         };
         
         // Zorg dat public folder bestaat
@@ -49,7 +53,7 @@ async function scrapeFietsen() {
         // Schrijf naar JSON file
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
         
-        console.log(`✅ ${fietsen.length} fietsen opgeslagen in fietsen-data.json`);
+        console.log(`✅ ${uniekeFietsen.length} fietsen opgeslagen in fietsen-data.json`);
         console.log(`📸 Foto's zijn nu 800px breed (scherp!)`);
         
     } catch (error) {
@@ -58,7 +62,35 @@ async function scrapeFietsen() {
     }
 }
 
-function parseFietsenFromHTML(html) {
+async function fetchFietsenHTML(category) {
+    const url = `${FEITSENWIJK_URL}?cat=${category}`;
+    console.log(`   Ophalen: ${url}`);
+    
+    const response = await axios.get(url, {
+        timeout: 30000,
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (compatible; BusVolBikes/1.0)',
+            'Accept': 'text/html'
+        },
+        responseEncoding: 'binary'
+    });
+    
+    // Converteer van latin1 (iso-8859-1) naar utf-8
+    return Buffer.from(response.data, 'binary').toString('utf8');
+}
+
+function verwijderDuplicaten(fietsen) {
+    const gezien = new Set();
+    return fietsen.filter(fiets => {
+        if (gezien.has(fiets.id)) {
+            return false;
+        }
+        gezien.add(fiets.id);
+        return true;
+    });
+}
+
+function parseFietsenFromHTML(html, categorie) {
     const fietsen = [];
     
     // Zoek naar table rows met fiets data
@@ -81,13 +113,10 @@ function parseFietsenFromHTML(html) {
         
         // Parse details: "Elektrische fiets, heren, 55 cm, blauw"
         const detailParts = details.split(',').map(p => p.trim());
-        const soort = detailParts[0] || '';
+        const type = detailParts[0] || '';
         const geslacht = detailParts[1] || '';
         const maat = detailParts[2] || '';
         const kleur = detailParts[3] || '';
-        
-        // Bepaal of nieuw of gebruikt
-        const isNieuw = titel.toLowerCase().includes('nieuw') || details.toLowerCase().includes('nieuw');
         
         // Haal prijs op uit de rest van de HTML na deze row
         const prijsMatch = html.substring(match.index, match.index + 500).match(prijsRegex);
@@ -98,7 +127,8 @@ function parseFietsenFromHTML(html) {
             titel: titel,
             prijs: prijs,
             prijsNummer: parsePrijs(prijs),
-            soort: isNieuw ? 'Nieuw' : 'Gebruikt',
+            soort: categorie,  // 'Gebruikt' of 'Nieuw'
+            type: type,
             geslacht: geslacht,
             kleur: kleur,
             maat: maat,
