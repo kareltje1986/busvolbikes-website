@@ -12,4 +12,9 @@ RUN chown -R www-data:www-data /var/www/html
 # Enable .htaccess
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
-EXPOSE 80
+# Copy and configure entrypoint
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Use entrypoint script
+ENTRYPOINT ["docker-entrypoint.sh"]
