@@ -649,7 +649,23 @@ body {
 
 .service-visual {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
+}
+
+.service-workshop {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+}
+
+.service-workshop img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .service-card {
