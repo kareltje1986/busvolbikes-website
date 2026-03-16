@@ -17,7 +17,7 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="#over-ons" class="nav-link">Over ons</a></li>
-                <li><a href="#aanbod" class="nav-link">Aanbod</a></li>
+                <li><a href="voorraad.html" class="nav-link">Aanbod</a></li>
                 <li><a href="#reparatie" class="nav-link">Reparatie</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
@@ -128,28 +128,14 @@
                 <p class="section-subtitle">Nieuwe en gebruikte fietsen uit ons systeem. Klik op een fiets voor meer details.</p>
             </div>
 
-            <div class="voorraad-filter">
-                <button class="filter-btn active" onclick="loadVoorraad('0', this)">Alle fietsen</button>
-                <button class="filter-btn" onclick="loadVoorraad('1', this)">Gebruikt</button>
-                <button class="filter-btn" onclick="loadVoorraad('2', this)">Nieuw</button>
+            <div id="voorraad-preview" class="voorraad-preview">
+                <div class="loading">Fietsen laden...</div>
             </div>
 
-            <div class="voorraad-container">
-                <iframe id="fietsenwijk-frame" 
-                        src="https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/?css=https://busvolbikes-website-production.up.railway.app/fietsenwijk.css" 
-                        width="100%" 
-                        height="800" 
-                        frameborder="0"
-                        title="Actuele fietsenvoorraad">
-                </iframe>
-            </div>
-
-            <div class="cta-box">
-                <div class="cta-content">
-                    <h3>Meer fietsen beschikbaar</h3>
-                    <p>Ons aanbod wisselt dagelijks. Neem contact op voor de nieuwste fietsen of kom langs voor een proefrit.</p>
-                </div>
-                <a href="#contact" class="btn btn-primary">Contact opnemen</a>
+            <div class="voorraad-cta">
+                <a href="voorraad.html" class="btn btn-primary btn-large">
+                    Bekijk alle fietsen →
+                </a>
             </div>
         </div>
     </section>
@@ -404,6 +390,37 @@
             el.classList.add('reveal');
             observer.observe(el);
         });
+        
+        // Laad voorraad preview
+        async function laadVoorraadPreview() {
+            const container = document.getElementById('voorraad-preview');
+            try {
+                const response = await fetch('public/fietsen-data.json');
+                const data = await response.json();
+                
+                // Toon maximaal 6 fietsen
+                const fietsen = data.fietsen.slice(0, 6);
+                
+                container.innerHTML = fietsen.map(fiets => `
+                    <article class="fiets-card">
+                        <div class="fiets-image">
+                            <img src="${fiets.foto}" alt="${fiets.titel}" loading="lazy" 
+                                 onerror="this.src='images/fiets-spotlight.jpg'">
+                        </div>
+                        <div class="fiets-content">
+                            <h3 class="fiets-title">${fiets.titel}</h3>
+                            <p class="fiets-details">${fiets.geslacht} • ${fiets.maat} • ${fiets.kleur}</p>
+                            <span class="fiets-prijs">${fiets.prijs}</span>
+                        </div>
+                    </article>
+                `).join('');
+                
+            } catch (error) {
+                container.innerHTML = '<p style="text-align:center;color:#64748b;">Fietsen laden mislukt. <a href="voorraad.html">Bekijk voorraad →</a></p>';
+            }
+        }
+        
+        laadVoorraadPreview();
     </script>
 </body>
 </html>
