@@ -94,11 +94,9 @@ function parseFietsenFromHTML(html, categorie) {
     const fietsen = [];
     
     // Zoek naar table rows met fiets data
-    // Pattern: <tr>...<a href="/fietsen/detail/?b=ID"><img src="/images/bicycles/...060.jpg">...</tr>
-    const rowRegex = /<tr>\s*<td[^>]*>\s*<a href="\/fietsen\/detail\/\?b=([^"]+)"[^>]*>\s*<img src="([^"]+)"[^>]*>\s*<\/a>\s*<\/td>\s*<td[^>]*>\s*<a[^>]*>\s*<b>([^<]+)<\/b>\s*<\/a>.*?<br>\s*([^<]+)<br>/gi;
-    
-    // Zoek naar prijs pattern
-    const prijsRegex = /&nbsp;<b>\s*([€\s\d\.,\-]+)\s*<\/b>/i;
+    // Pattern: <tr>...<a href="/fietsen/detail/?b=ID"><img src="/images/bicycles/...060.jpg">...prijs...</tr>
+    // Capture groups: 1=ID, 2=foto, 3=titel, 4=details, 5=prijs
+    const rowRegex = /<tr>\s*<td[^>]*>\s*<a href="\/fietsen\/detail\/\?b=([^"]+)"[^>]*>\s*<img src="([^"]+)"[^>]*>\s*<\/a>\s*<\/td>\s*<td[^>]*>\s*<a[^>]*>\s*<b>([^<]+)<\/b>\s*<\/a>.*?<br>\s*([^<]+)<br>\s*<\/td>\s*<td[^>]*>[\s&nbsp;]*<b>\s*([€\xa0\ufffd\s\d\.,\-]*)\s*<\/b>/gi;
     
     let match;
     while ((match = rowRegex.exec(html)) !== null) {
@@ -118,9 +116,8 @@ function parseFietsenFromHTML(html, categorie) {
         const maat = detailParts[2] || '';
         const kleur = detailParts[3] || '';
         
-        // Haal prijs op uit de rest van de HTML na deze row
-        const prijsMatch = html.substring(match.index, match.index + 500).match(prijsRegex);
-        const prijs = prijsMatch ? prijsMatch[1].trim() : '';
+        // Haal prijs op (groep 5) en fix encoding
+        let prijs = match[5] ? match[5].trim().replace(/[\xa0\ufffd]/g, '€') : '';
         
         fietsen.push({
             id: id,
