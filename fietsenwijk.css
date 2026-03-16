@@ -44,13 +44,12 @@ td {
 td img {
     width: 100% !important;
     max-width: 100% !important;
-    height: 180px !important;
+    height: 200px !important;
     object-fit: cover !important;
     object-position: center !important;
     display: block;
     order: 1;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    transform: scale(1);
 }
 
 /* Title */
@@ -106,6 +105,10 @@ hr {
 @media (max-width: 1024px) {
     tbody {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    td img {
+        height: 160px !important;
     }
 }
 

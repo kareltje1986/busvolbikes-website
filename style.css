@@ -110,15 +110,13 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: var(--space-xs);
     text-decoration: none;
-    color: var(--text-primary);
-    font-weight: 700;
-    font-size: 1.25rem;
 }
 
-.logo-icon {
-    font-size: 1.5rem;
+.logo-img {
+    height: 45px;
+    width: auto;
+    display: block;
 }
 
 .nav-menu {
@@ -203,6 +201,13 @@ body {
     text-align: center;
     max-width: 800px;
     padding: var(--space-xl) var(--space-md);
+}
+
+.hero-logo {
+    height: 120px;
+    width: auto;
+    margin-bottom: var(--space-lg);
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
 }
 
 .hero-badge {
