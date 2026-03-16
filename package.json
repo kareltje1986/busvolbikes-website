@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "scrape": "node scraper.js",
+    "build": "node scraper.js"
   },
   "dependencies": {
     "express": "^4.18.2",
