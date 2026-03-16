@@ -14,8 +14,8 @@ app.get('/api/fietsen', async (req, res) => {
     const { cat = '0', c, b } = req.query;
     
     try {
-        // Build XML feed URL
-        let xmlUrl = 'https://F6EA9296200A4E168099E73DF284025B.hst.fietsenwijk.nl/fietsen/xml/';
+        // Build XML feed URL - using the working endpoint
+        let xmlUrl = 'https://d40972d3c78b4bc6a44e816ede6281cc.hst.fietsenwijk.nl/fietsen/xml/';
         const params = [];
         if (cat !== '0') params.push(`cat=${cat}`);
         if (c) params.push(`c=${encodeURIComponent(c)}`);
