@@ -1249,9 +1249,14 @@ body {
 }
 
 .voorraad-preview .fiets-prijs {
-    font-size: 18px;
+    display: inline-block;
+    font-size: 20px;
     font-weight: 800;
     color: #22c55e;
+    background: #f0fdf4;
+    padding: 6px 14px;
+    border-radius: 8px;
+    margin-top: 8px;
 }
 
 .voorraad-cta {
