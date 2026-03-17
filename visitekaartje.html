@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus vol Bikes - Visitekaartje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #e5e5e5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            gap: 40px;
+            padding: 40px;
+        }
+        
+        /* Visitekaartje formaat 85x55mm (standaard NL) */
+        .card {
+            width: 85mm;
+            height: 55mm;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* VOORKANT */
+        .front {
+            background: linear-gradient(135deg, #1a2332 0%, #2d3a4f 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Groene accent lijn boven */
+        .front::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3mm;
+            background: #388e3c;
+        }
+        
+        /* Logo container */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .logo-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50mm;
+            height: 35mm;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 45mm;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))
+                    drop-shadow(0 0 20px rgba(56, 142, 60, 0.3))
+                    drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            position: relative;
+            z-index: 10;
+        }
+        
+        .tagline {
+            font-size: 8pt;
+            color: #94a3b8;
+            margin-top: 3mm;
+            font-style: italic;
+        }
+        
+        /* ACHTERKANT */
+        .back {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            padding: 6mm;
+            position: relative;
+        }
+        
+        /* Groene balk links */
+        .back::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2mm;
+            background: #388e3c;
+        }
+        
+        .back-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4mm;
+            padding-left: 3mm;
+        }
+        
+        .back-logo {
+            width: 12mm;
+            height: auto;
+            margin-right: 2mm;
+        }
+        
+        .back-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #1a2332;
+        }
+        
+        .back-subtitle {
+            font-size: 7pt;
+            color: #388e3c;
+            font-weight: 600;
+        }
+        
+        /* Contact info */
+        .contact-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2.5mm;
+            padding-left: 3mm;
+        }
+        
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+        }
+        
+        .contact-icon {
+            width: 5mm;
+            height: 5mm;
+            background: #388e3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 7pt;
+            flex-shrink: 0;
+        }
+        
+        .contact-text {
+            font-size: 8pt;
+            color: #334155;
+        }
+        
+        .contact-text strong {
+            color: #1a2332;
+        }
+        
+        /* USP footer */
+        .usp-footer {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 3mm;
+            border-top: 0.5px solid #e2e8f0;
+            margin-top: 2mm;
+            padding-left: 3mm;
+        }
+        
+        .usp-item {
+            text-align: center;
+        }
+        
+        .usp-number {
+            font-size: 12pt;
+            font-weight: 800;
+            color: #388e3c;
+            line-height: 1;
+        }
+        
+        .usp-label {
+            font-size: 5pt;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+        
+        /* Print instellingen */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* Preview schaling */
+        @media screen and (max-width: 600px) {
+            body {
+                flex-direction: column;
+            }
+            .card {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- VOORKANT -->
+    <div class="card front">
+        <div class="logo-container">
+            <div class="logo-bg"></div>
+            <img src="logo-busvolbikes.svg" alt="Bus vol Bikes" class="logo">
+        </div>
+        <p class="tagline">Van fietsenzaak naar jou!</p>
+    </div>
+    
+    <!-- ACHTERKANT -->
+    <div class="card back">
+        <div class="back-header">
+            <img src="logo-busvolbikes.svg" alt="Bus vol Bikes" class="back-logo">
+            <div>
+                <div class="back-title">Bus vol Bikes</div>
+                <div class="back-subtitle">E-bikes in Raalte</div>
+            </div>
+        </div>
+        
+        <div class="contact-info">
+            <div class="contact-row">
+                <div class="contact-icon">📍</div>
+                <div class="contact-text">
+                    <strong>Ampèrestraat 17</strong><br>
+                    8102 PN Raalte
+                </div>
+            </div>
+            
+            <div class="contact-row">
+                <div class="contact-icon">🌐</div>
+                <div class="contact-text">
+                    <strong>busvolbikes.nl</strong>
+                </div>
+            </div>
+            
+            <div class="contact-row">
+                <div class="contact-icon">✓</div>
+                <div class="contact-text">
+                    Ook 's avonds open op afspraak
+                </div>
+            </div>
+        </div>
+        
+        <div class="usp-footer">
+            <div class="usp-item">
+                <div class="usp-number">6</div>
+                <div class="usp-label">Maanden<br>garantie</div>
+            </div>
+            <div class="usp-item">
+                <div class="usp-number">€45</div>
+                <div class="usp-label">Bezorging<br>in NL</div>
+            </div>
+            <div class="usp-item">
+                <div class="usp-number">150+</div>
+                <div class="usp-label">Tevreden<br>klanten</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
