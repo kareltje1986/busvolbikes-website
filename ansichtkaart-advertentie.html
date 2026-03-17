@@ -52,15 +52,34 @@
             background: #388e3c;
         }
         
-        /* Logo */
+        /* Logo - VERBETERD voor betere zichtbaarheid */
         .logo-container {
             text-align: center;
+            position: relative;
         }
         
         .logo {
             width: 55mm;
             height: auto;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+            /* Witte gloed achter logo voor contrast op donkere achtergrond */
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6))
+                    drop-shadow(0 0 30px rgba(56, 142, 60, 0.4))
+                    drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Witte achtergrond cirkel achter logo */
+        .logo-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70mm;
+            height: 50mm;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
         }
         
         /* Hoofdboodschap */
@@ -214,6 +233,8 @@
             <div class="accent-bar"></div>
             
             <div class="logo-container">
+                <!-- Witte gloed achter logo -->
+                <div class="logo-bg"></div>
                 <!-- Gebruik het SVG logo -->
                 <img src="logo-busvolbikes.svg" alt="Bus vol Bikes" class="logo">
             </div>
