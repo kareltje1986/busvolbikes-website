@@ -100,9 +100,9 @@ a {
     left: 0;
     right: 0;
     z-index: var(--z-navbar);
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     transition: var(--transition-base);
 }
 
@@ -121,7 +121,7 @@ a {
     align-items: center;
     font-weight: 800;
     font-size: 1.25rem;
-    color: var(--text-white);
+    color: var(--text-primary);
 }
 
 .logo-img {
@@ -136,7 +136,7 @@ a {
 }
 
 .nav-link {
-    color: var(--text-light);
+    color: var(--text-secondary);
     font-weight: 500;
     font-size: 0.9375rem;
     transition: var(--transition-fast);
@@ -174,7 +174,7 @@ a {
     width: 25px;
     height: 2px;
     margin: 5px auto;
-    background: var(--text-white);
+    background: var(--text-primary);
     border-radius: 2px;
     transition: var(--transition-fast);
 }
@@ -201,7 +201,7 @@ a {
         left: -100%;
         top: 72px;
         flex-direction: column;
-        background: var(--bg-dark);
+        background: var(--bg-primary);
         width: 100%;
         text-align: center;
         padding: var(--space-xl) 0;
