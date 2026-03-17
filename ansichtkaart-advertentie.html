@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus vol Bikes - Ansichtkaart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+        }
+        
+        /* Ansichtkaart formaat - landschap voor opvallend effect */
+        .card {
+            width: 210mm;
+            height: 148mm;
+            background: linear-gradient(135deg, #1a2332 0%, #2d3a4f 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: flex;
+        }
+        
+        /* Linker kant - hoofdboodschap */
+        .left-side {
+            flex: 1.2;
+            padding: 25mm 15mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        /* Groene accent balk bovenaan */
+        .accent-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8mm;
+            background: #388e3c;
+        }
+        
+        /* Logo */
+        .logo-container {
+            text-align: center;
+        }
+        
+        .logo {
+            width: 55mm;
+            height: auto;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+        }
+        
+        /* Hoofdboodschap */
+        .headline {
+            text-align: center;
+            margin: 8mm 0;
+        }
+        
+        .headline h1 {
+            font-size: 28pt;
+            font-weight: 800;
+            color: white;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .headline h1 span {
+            color: #388e3c;
+            display: block;
+            font-size: 32pt;
+            margin-top: 3mm;
+        }
+        
+        /* Subtitel */
+        .subheadline {
+            font-size: 14pt;
+            color: #94a3b8;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        /* Rechter kant - USP's en contact */
+        .right-side {
+            flex: 1;
+            background: rgba(56, 142, 60, 0.1);
+            border-left: 3px solid #388e3c;
+            padding: 20mm 12mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* USP lijst */
+        .usp-section h2 {
+            font-size: 12pt;
+            color: #388e3c;
+            margin-bottom: 5mm;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .usp-list {
+            list-style: none;
+        }
+        
+        .usp-item {
+            font-size: 11pt;
+            color: #e2e8f0;
+            margin: 3mm 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 2mm;
+            line-height: 1.3;
+        }
+        
+        .usp-check {
+            color: #388e3c;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        
+        /* Contact sectie */
+        .contact-section {
+            text-align: center;
+            padding-top: 5mm;
+            border-top: 1px solid rgba(56, 142, 60, 0.3);
+        }
+        
+        .address {
+            font-size: 10pt;
+            color: #94a3b8;
+            margin-bottom: 3mm;
+        }
+        
+        .website {
+            font-size: 14pt;
+            font-weight: 700;
+            color: #388e3c;
+            margin-bottom: 2mm;
+        }
+        
+        .hours {
+            font-size: 10pt;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        
+        /* Call-to-action */
+        .cta {
+            background: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 4mm 6mm;
+            border-radius: 3mm;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-top: 5mm;
+            box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4);
+        }
+        
+        /* Decoratieve elementen */
+        .bike-icon {
+            position: absolute;
+            font-size: 60pt;
+            opacity: 0.03;
+            color: white;
+        }
+        
+        .bike-1 { top: 10mm; right: 15mm; }
+        .bike-2 { bottom: 15mm; left: 10mm; }
+        
+        /* Print instellingen */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .card {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+        
+        /* Preview schaling */
+        @media screen and (max-width: 800px) {
+            .card {
+                transform: scale(0.6);
+                transform-origin: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- Decoratieve fietsen -->
+        <div class="bike-icon bike-1">🚲</div>
+        <div class="bike-icon bike-2">🚴</div>
+        
+        <!-- Linker kant -->
+        <div class="left-side">
+            <div class="accent-bar"></div>
+            
+            <div class="logo-container">
+                <!-- Gebruik het SVG logo -->
+                <img src="logo-busvolbikes.svg" alt="Bus vol Bikes" class="logo">
+            </div>
+            
+            <div class="headline">
+                <h1>
+                    Zoek je een
+                    <span>betrouwbare<br>e-bike?</span>
+                </h1>
+            </div>
+            
+            <p class="subheadline">
+                Bij Bus vol Bikes ben je aan het juiste adres!
+            </p>
+        </div>
+        
+        <!-- Rechter kant -->
+        <div class="right-side">
+            <div class="usp-section">
+                <h2>Waarom wij?</h2>
+                <ul class="usp-list">
+                    <li class="usp-item">
+                        <span class="usp-check">✓</span>
+                        <span>6 maanden garantie<br>op elke fiets</span>
+                    </li>
+                    <li class="usp-item">
+                        <span class="usp-check">✓</span>
+                        <span>Rijklaar geleverd<br>en volledig nagekeken</span>
+                    </li>
+                    <li class="usp-item">
+                        <span class="usp-check">✓</span>
+                        <span>Ook 's avonds open<br>op afspraak</span>
+                    </li>
+                    <li class="usp-item">
+                        <span class="usp-check">✓</span>
+                        <span>Groot aanbod tweedehands<br>en nieuwe e-bikes</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="contact-section">
+                <p class="address">Ampèrestraat 17<br>8102 PN Raalte</p>
+                <p class="website">busvolbikes.nl</p>
+                <p class="hours">Bekijk onze voorraad online!</p>
+                
+                <div class="cta">
+                    Kom langs of maak een afspraak
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
