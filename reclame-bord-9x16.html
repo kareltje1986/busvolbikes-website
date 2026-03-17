@@ -24,8 +24,8 @@
         .billboard {
             width: 1080px;
             height: 1920px;
-            /* Lichtere achtergrond voor beter logo contrast */
-            background: linear-gradient(180deg, #1e293b 0%, #334155 40%, #1e293b 100%);
+            /* Rustige, effen achtergrond - minder vlekkerig */
+            background: linear-gradient(180deg, #1a2332 0%, #2d3a4f 50%, #1a2332 100%);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -34,20 +34,15 @@
             justify-content: center;
         }
         
-        /* Achtergrond animatie */
+        /* Subtiele achtergrond - GEEN animatie, alleen vaste gradient */
         .bg-pattern {
             position: absolute;
             inset: 0;
-            opacity: 0.1;
-            background-image: 
-                radial-gradient(circle at 20% 80%, #22c55e 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, #22c55e 0%, transparent 50%);
-            animation: bgPulse 10s ease-in-out infinite;
-        }
-        
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.1; transform: scale(1); }
-            50% { opacity: 0.2; transform: scale(1.1); }
+            opacity: 0.05;
+            background: 
+                radial-gradient(circle at 20% 80%, #22c55e 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, #22c55e 0%, transparent 40%);
+            /* Geen animatie - statisch voor rustiger beeld */
         }
         
         /* Logo container */
@@ -102,10 +97,10 @@
             transform: translate(-50%, -50%);
             width: 800px;
             height: 600px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 40%, transparent 70%);
             border-radius: 50%;
             z-index: 5;
-            animation: bgPulse 10s ease-in-out infinite;
+            /* Geen animatie - stil */
         }
         
         /* Glow effect achter logo - VERBETERD */
@@ -176,10 +171,10 @@
             font-size: 56px;
         }
         
-        /* Contact info onderaan */
+        /* Contact info onderaan - UNIEKE TEKST */
         .contact-info {
             position: absolute;
-            bottom: 120px;
+            bottom: 140px;
             left: 0;
             right: 0;
             text-align: center;
@@ -197,32 +192,34 @@
         .contact-text {
             font-size: 42px;
             color: #94a3b8;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .contact-url {
-            font-size: 56px;
+            font-size: 52px;
             font-weight: 700;
             color: #22c55e;
+            margin-bottom: 15px;
         }
         
-        /* Fiets emoji animatie */
+        .contact-phone {
+            font-size: 48px;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        
+        /* Fiets emoji - subtiel, stil */
         .bike-emoji {
             position: absolute;
-            font-size: 80px;
-            opacity: 0.1;
-            animation: bikeFloat 10s ease-in-out infinite;
+            font-size: 60px;
+            opacity: 0.06;
+            /* Geen animatie meer */
         }
         
-        .bike-1 { top: 10%; left: 10%; animation-delay: 0s; }
-        .bike-2 { top: 20%; right: 15%; animation-delay: 2s; }
-        .bike-3 { bottom: 30%; left: 8%; animation-delay: 4s; }
-        .bike-4 { bottom: 20%; right: 10%; animation-delay: 6s; }
-        
-        @keyframes bikeFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
-            50% { transform: translateY(-30px) rotate(10deg); opacity: 0.2; }
-        }
+        .bike-1 { top: 8%; left: 12%; }
+        .bike-2 { top: 15%; right: 12%; }
+        .bike-3 { bottom: 35%; left: 10%; }
+        .bike-4 { bottom: 25%; right: 8%; }
         
         /* Voor screen recording - instruction overlay */
         .recording-tip {
@@ -318,13 +315,11 @@
             </ul>
         </div>
         
-        <!-- Contact info -->
+        <!-- Contact info - UNIEKE TEKST -->
         <div class="contact-info">
-            <p class="contact-text">Raalte & omgeving</p>
-            <p class="contact-url">6 maanden garantie</p>
-            <p class="contact-text" style="margin-top: 20px; font-size: 42px;">
-                Ook 's avonds open
-            </p>
+            <p class="contact-text">📍 Raalte & omgeving</p>
+            <p class="contact-url">busvolbikes.nl</p>
+            <p class="contact-phone">Direct een afspraak!</p>
         </div>
     </div>
 
