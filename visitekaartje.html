@@ -143,60 +143,40 @@
             padding-left: 3mm;
         }
         
-        .contact-row {
-            display: flex;
-            align-items: center;
-            gap: 2mm;
-        }
-        
-        .contact-icon {
-            width: 5mm;
-            height: 5mm;
-            background: #388e3c;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 6pt;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
         .contact-text {
-            font-size: 8pt;
+            font-size: 8.5pt;
             color: #334155;
+            line-height: 1.4;
         }
         
-        .contact-text strong {
+        .contact-text.name {
+            font-size: 11pt;
             color: #1a2332;
+            margin-bottom: 2mm;
         }
         
-        /* USP footer */
-        .usp-footer {
-            display: flex;
-            justify-content: space-around;
+        .contact-text.name strong {
+            font-weight: 700;
+        }
+        
+        .contact-text.phone {
+            font-weight: 600;
+            color: #388e3c;
+        }
+        
+        /* Website footer */
+        .website-footer {
+            text-align: center;
             padding-top: 2mm;
             border-top: 0.5px solid #e2e8f0;
-            margin-top: 1mm;
+            margin-top: 2mm;
             padding-left: 3mm;
         }
 
-        .usp-item {
-            text-align: center;
-        }
-
-        .usp-number {
+        .website-url {
             font-size: 10pt;
-            font-weight: 800;
+            font-weight: 700;
             color: #388e3c;
-            line-height: 1;
-        }
-
-        .usp-label {
-            font-size: 4pt;
-            color: #64748b;
-            text-transform: uppercase;
         }
         
         /* Print instellingen */
@@ -243,48 +223,26 @@
         </div>
         
         <div class="contact-info">
-            <div class="contact-row">
-                <div class="contact-icon">N</div>
-                <div class="contact-text">
-                    <strong>Erwin Timmer</strong>
-                </div>
+            <div class="contact-text name">
+                <strong>Erwin Timmer</strong>
             </div>
             
-            <div class="contact-row">
-                <div class="contact-icon">T</div>
-                <div class="contact-text">
-                    <strong>06-39238249</strong>
-                </div>
+            <div class="contact-text phone">
+                06-39238249
             </div>
             
-            <div class="contact-row">
-                <div class="contact-icon">@</div>
-                <div class="contact-text">
-                    info@busvolbikes.nl
-                </div>
+            <div class="contact-text email">
+                info@busvolbikes.nl
             </div>
             
-            <div class="contact-row">
-                <div class="contact-icon">A</div>
-                <div class="contact-text">
-                    Ampèrestraat 17, 8102 PN Raalte
-                </div>
+            <div class="contact-text address">
+                Ampèrestraat 17, 8102 PN Raalte
             </div>
         </div>
         
-        <div class="usp-footer">
-            <div class="usp-item">
-                <div class="usp-number">6</div>
-                <div class="usp-label">Maanden<br>garantie</div>
-            </div>
-            <div class="usp-item">
-                <div class="usp-number">€45</div>
-                <div class="usp-label">Bezorging<br>in NL</div>
-            </div>
-            <div class="usp-item">
-                <div class="usp-number">150+</div>
-                <div class="usp-label">Tevreden<br>klanten</div>
-            </div>
+        <!-- Website footer -->
+        <div class="website-footer">
+            <div class="website-url">busvolbikes.nl</div>
         </div>
     </div>
 </body>
