@@ -106,10 +106,6 @@ a {
     border-radius: 0 0 20px 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: var(--transition-base);
-    max-width: 1200px;
-    margin: 0 auto;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .nav-container {
