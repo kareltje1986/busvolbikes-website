@@ -4,14 +4,16 @@
 :root {
     --primary: #388e3c;
     --primary-dark: #2e7d32;
+    --primary-light: #e8f5e9;
     --secondary: #1a1a2e;
     --accent: #06ffa5;
     --text: #1a1a2e;
-    --text-light: #4a4a5a;
-    --bg: #f8f9fa;
+    --text-light: #4a5568;
+    --bg: #f7fafc;
     --white: #ffffff;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
 }
 
 * {
@@ -21,7 +23,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
     color: var(--text);
     background: var(--bg);
@@ -39,7 +41,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 1rem 0;
@@ -56,7 +58,7 @@ body {
 }
 
 .logo-text {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--primary);
 }
@@ -71,6 +73,7 @@ body {
     color: var(--text);
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.95rem;
     transition: color 0.3s;
 }
 
@@ -82,19 +85,19 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    gap: 4px;
 }
 
 .bar {
-    width: 25px;
-    height: 3px;
+    width: 24px;
+    height: 2px;
     background: var(--text);
-    margin: 3px 0;
     transition: 0.3s;
 }
 
 /* Hero */
 .hero {
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,27 +123,35 @@ body {
 .hero-badge {
     display: inline-block;
     background: rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 1rem;
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1.25rem;
     border-radius: 50px;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
 }
 
 .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .gradient-text {
-    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     margin-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 0.95;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-link {
@@ -161,24 +172,30 @@ body {
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .btn-primary {
     background: var(--primary);
     color: white;
+    box-shadow: 0 4px 14px rgba(56, 142, 60, 0.4);
 }
 
 .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 142, 60, 0.5);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
     color: white;
-    border: 2px solid white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(4px);
 }
 
 .btn-secondary:hover {
@@ -186,20 +203,34 @@ body {
     color: var(--text);
 }
 
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
 /* Partnership Banner */
 .section-partnership {
-    padding: 1.5rem 0;
-    background: #e8f5e9;
+    padding: 1.25rem 0;
+    background: var(--primary-light);
+    border-bottom: 1px solid rgba(56, 142, 60, 0.1);
 }
 
 .partnership-banner {
     text-align: center;
     color: var(--primary-dark);
+    font-size: 0.95rem;
 }
 
 .partnership-banner a {
     color: var(--primary);
     font-weight: 600;
+    text-decoration: none;
 }
 
 /* Sections */
@@ -216,15 +247,19 @@ body {
     display: inline-block;
     background: var(--primary);
     color: white;
-    padding: 0.3rem 1rem;
+    padding: 0.4rem 1rem;
     border-radius: 50px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
     margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .section-title {
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 .highlight {
@@ -235,64 +270,107 @@ body {
     color: var(--text-light);
     max-width: 600px;
     margin: 0 auto;
+    font-size: 1.05rem;
 }
 
 /* Verhuur Grid */
 .verhuur-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .verhuur-card {
     background: white;
-    padding: 2rem;
-    border-radius: 1rem;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.verhuur-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .verhuur-image {
-    width: 60px;
-    height: 60px;
-    background: var(--primary);
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    height: 220px;
+    overflow: hidden;
+    background: var(--bg);
 }
 
-.verhuur-card h3 {
+.verhuur-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.verhuur-card:hover .verhuur-image img {
+    transform: scale(1.05);
+}
+
+.verhuur-content {
+    padding: 1.5rem;
+}
+
+.verhuur-content h3 {
     font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+}
+
+.verhuur-content p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
 }
 
 .verhuur-specs {
     list-style: none;
-    margin-top: 1rem;
-    color: var(--text-light);
 }
 
 .verhuur-specs li {
-    margin-bottom: 0.3rem;
+    padding: 0.3rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
 }
 
-.info-box {
-    background: #e8f5e9;
-    padding: 1.5rem;
-    border-radius: 1rem;
+/* Location Box */
+.location-box {
+    background: white;
+    border-radius: var(--radius);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    box-shadow: var(--shadow);
     max-width: 800px;
     margin: 0 auto;
 }
 
-.info-box h4 {
-    color: var(--primary-dark);
+.location-icon {
+    font-size: 2rem;
+}
+
+.location-content h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.location-content p {
+    color: var(--text-light);
     margin-bottom: 0.5rem;
 }
 
-.info-box a {
+.location-note {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.location-note a {
     color: var(--primary);
     font-weight: 600;
 }
@@ -300,108 +378,215 @@ body {
 /* Routes Grid */
 .routes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .route-card {
     background: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.route-card:hover {
+    transform: translateY(-4px);
+}
+
+.route-image {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+}
+
+.route-content {
+    padding: 1.25rem;
 }
 
 .route-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .route-difficulty {
-    font-size: 0.8rem;
-    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
     border-radius: 4px;
-    background: #e8f5e9;
+    font-weight: 600;
+}
+
+.route-difficulty.easy {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.route-difficulty.medium {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.route-difficulty.hard {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 .route-card h3 {
     font-size: 1.1rem;
+    margin: 0;
 }
 
 .route-stats {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+.route-content p {
     color: var(--text-light);
     font-size: 0.9rem;
 }
 
-.route-link {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
+.routes-cta {
+    text-align: center;
+    margin-top: 2rem;
 }
 
 /* Prijzen Grid */
 .prijzen-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.5rem;
-    max-width: 800px;
-    margin: 0 auto 2rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
 }
 
 .prijs-card {
     background: white;
-    padding: 2rem;
-    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     text-align: center;
+    position: relative;
 }
 
 .prijs-highlight {
     border: 2px solid var(--primary);
-    background: #e8f5e9;
+    background: var(--primary-light);
+}
+
+.prijs-highlight::before {
+    content: 'Populair';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
 }
 
 .prijs-tijd {
     font-weight: 600;
     color: var(--text-light);
     margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }
 
 .prijs-bedrag {
     font-size: 2.5rem;
     font-weight: 800;
     color: var(--primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
 }
 
-.prijzen-nuancering {
-    text-align: center;
+.prijs-card p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.prijs-card small {
+    color: var(--text-light);
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+.prijzen-info {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.info-item {
+    background: white;
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: var(--shadow);
+}
+
+.info-icon {
+    font-size: 1.5rem;
+}
+
+.info-item p {
+    font-size: 0.9rem;
     color: var(--text-light);
 }
 
 /* About Grid */
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
 }
 
-.about-text h3 {
+.about-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.about-logo {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.about-card h3 {
     color: var(--primary);
     margin-bottom: 1rem;
 }
 
-.about-text p {
-    margin-bottom: 1rem;
+.about-card p {
+    color: var(--text-light);
+    margin-bottom: 1.25rem;
 }
 
 .about-link {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.95rem;
 }
 
 /* Contact Grid */
@@ -410,19 +595,29 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 0 auto 2rem;
 }
 
 .contact-card {
     background: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
+    padding: 1.75rem;
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
     text-align: center;
 }
 
+.contact-card.main {
+    border: 2px solid var(--primary);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
 .contact-card h3 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
 }
 
 .contact-card a {
@@ -434,8 +629,22 @@ body {
 
 .contact-note {
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-top: 0.5rem;
+}
+
+.contact-partner {
+    text-align: center;
+    padding: 1rem;
+    background: var(--primary-light);
+    border-radius: var(--radius);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-partner p {
+    color: var(--primary-dark);
+    font-size: 0.95rem;
 }
 
 /* Footer */
@@ -451,15 +660,23 @@ body {
     align-items: center;
     margin-bottom: 2rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .footer-brand h4 {
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .footer-brand p {
     color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.footer-brand a {
+    color: var(--accent);
+    text-decoration: none;
 }
 
 .footer-links {
@@ -471,6 +688,7 @@ body {
     color: white;
     text-decoration: none;
     opacity: 0.8;
+    font-size: 0.9rem;
 }
 
 .footer-links a:hover {
@@ -482,6 +700,7 @@ body {
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
 }
 
 /* Responsive */
@@ -493,21 +712,27 @@ body {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 60px;
         flex-direction: column;
         background: white;
         width: 100%;
         text-align: center;
         transition: 0.3s;
         padding: 2rem 0;
+        box-shadow: var(--shadow-lg);
     }
 
     .nav-menu.active {
         left: 0;
     }
 
-    .hero-title {
-        font-size: 2rem;
+    .hero {
+        min-height: 80vh;
+    }
+
+    .location-box {
+        flex-direction: column;
+        text-align: center;
     }
 
     .footer-grid {
