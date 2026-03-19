@@ -63,6 +63,11 @@ body {
     color: var(--primary);
 }
 
+.logo-img {
+    height: 50px;
+    width: auto;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="50" fill="#388e3c" opacity="0.1"/>
+  
+  <!-- Bike icon -->
+  <g transform="translate(25, 35)" fill="none" stroke="#388e3c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Wheels -->
+    <circle cx="15" cy="35" r="12"/>
+    <circle cx="55" cy="35" r="12"/>
+    <!-- Frame -->
+    <path d="M15 35 L30 15 L50 15 L35 35"/>
+    <path d="M30 15 L25 35"/>
+    <path d="M35 35 L50 15"/>
+    <!-- Handlebars -->
+    <path d="M48 15 L52 10"/>
+    <!-- Seat -->
+    <path d="M28 15 L26 10"/>
+  </g>
+  
+  <!-- Text: De Driesprong -->
+  <text x="120" y="55" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#1a1a2e">
+    De Driesprong
+  </text>
+  
+  <!-- Text: Fietsverhuur -->
+  <text x="120" y="85" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="500" fill="#388e3c">
+    Fietsverhuur Lemele
+  </text>
+</svg>
