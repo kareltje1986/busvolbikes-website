@@ -37,7 +37,7 @@
             <h1 class="hero-title">Fietsverhuur bij <span class="gradient-text">De Driesprong</span></h1>
             <p class="hero-subtitle">Huur een elektrische fiets bij De Driesprong in Lemele en ontdek de prachtige Sallandse Heuvelrug. Fietsen verzorgd door <a href="https://www.busvolbikes.nl" class="hero-link">Bus vol Bikes</a> uit Raalte.</p>
             <div class="hero-buttons">
-                <a href="#verhuur" class="btn btn-primary">Reserveer nu</a>
+                <a href="#" class="btn btn-primary" onclick="openReserveringModal(); return false;">Reserveer nu</a>
                 <a href="#routes" class="btn btn-secondary">Bekijk routes</a>
             </div>
         </div>
@@ -275,7 +275,13 @@
             <div class="section-header">
                 <span class="section-tag">Reserveren</span>
                 <h2 class="section-title">Reserveer je <span class="highlight">e-bike</span></h2>
-                <p class="section-subtitle">Bel De Driesprong of stuur een mail met je gewenste datum en het aantal fietsen. Je krijgt snel een bevestiging.</p>
+                <p class="section-subtitle">Kies hieronder direct je datum en tijd, of bel/mail De Driesprong. Je krijgt altijd snel een bevestiging.</p>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <a href="#" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;" onclick="openReserveringModal(); return false;">
+                    📅 Direct online reserveren
+                </a>
             </div>
 
             <div class="contact-grid">
@@ -304,6 +310,89 @@
             </div>
         </div>
     </section>
+
+    <!-- Reservering Modal -->
+    <div id="reserveringModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeReserveringModal()">&times;</span>
+            <h2>🚲 Reserveer je E-bike</h2>
+            <p class="modal-subtitle">Kies je datum, tijd en het aantal fietsen. Je ontvangt direct een bevestiging.</p>
+            
+            <form id="reserveringForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="naam">Naam *</label>
+                    <input type="text" id="naam" name="naam" required placeholder="Jouw naam">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="jouw@email.nl">
+                </div>
+                
+                <div class="form-group">
+                    <label for="telefoon">Telefoon</label>
+                    <input type="tel" id="telefoon" name="telefoon" placeholder="06-12345678">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="datum">Datum *</label>
+                        <input type="date" id="datum" name="datum" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tijd">Tijd *</label>
+                        <select id="tijd" name="tijd" required>
+                            <option value="">Kies tijd</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aantal">Aantal fietsen *</label>
+                        <select id="aantal" name="aantal" required>
+                            <option value="1">1 fiets</option>
+                            <option value="2">2 fietsen</option>
+                            <option value="3">3 fietsen</option>
+                            <option value="4">4 fietsen</option>
+                            <option value="5">5+ fietsen (groepskorting)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type">Type fiets *</label>
+                        <select id="type" name="type_fiets" required>
+                            <option value="stads">Stads E-bike</option>
+                            <option value="trekking">Trekking E-bike</option>
+                            <option value="beide">Geen voorkeur</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="opmerking">Opmerkingen</label>
+                    <textarea id="opmerking" name="opmerking" rows="3" placeholder="Bijv. speciale wensen, helmmaat, etc."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Verstuur reservering</button>
+                
+                <p class="form-note">💡 Je ontvangt een bevestigingsmail. Bij 4+ fietsen geldt 10% groepskorting!</p>
+            </form>
+            
+            <div id="formSuccess" class="form-success" style="display: none;">
+                <div class="success-icon">✅</div>
+                <h3>Reservering verstuurd!</h3>
+                <p>Je ontvangt binnen enkele minuten een bevestigingsmail.</p>
+                <button onclick="closeReserveringModal()" class="btn btn-secondary">Sluiten</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <div class="container">
@@ -354,6 +443,74 @@
                     });
                 }
             });
+        });
+
+        // Reservering Modal Functions
+        function openReserveringModal() {
+            document.getElementById('reserveringModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Set min date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('datum').min = today;
+        }
+
+        function closeReserveringModal() {
+            document.getElementById('reserveringModal').classList.remove('active');
+            document.body.style.overflow = '';
+            // Reset form after a delay
+            setTimeout(() => {
+                document.getElementById('reserveringForm').reset();
+                document.getElementById('reserveringForm').style.display = 'block';
+                document.getElementById('formSuccess').style.display = 'none';
+            }, 300);
+        }
+
+        // Close modal on outside click
+        document.getElementById('reserveringModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeReserveringModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeReserveringModal();
+            }
+        });
+
+        // Form handling (Formspree)
+        document.getElementById('reserveringForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = this;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Bezig met versturen...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    form.style.display = 'none';
+                    document.getElementById('formSuccess').style.display = 'block';
+                } else {
+                    alert('Er ging iets mis. Bel ons gerust: 0572 331254');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                alert('Er ging iets mis. Bel ons gerust: 0572 331254');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>
